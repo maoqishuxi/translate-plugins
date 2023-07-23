@@ -1,0 +1,10 @@
+{
+  "manifest_version": 2,
+  "name": "My Extension",
+  "version": "1.0",
+  "description": "My Chrome extension built with React and Tailwind CSS.",
+  "browser_action": {
+    "default_popup": "index.html"
+  },
+  "permissions": ["activeTab"]
+}
