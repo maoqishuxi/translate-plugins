@@ -37,11 +37,11 @@ function App() {
 
     const url = "https://ai.fakeopen.com/v1/chat/completions";
 
-    if (e.key ==="Enter") {
+    if (e.key === "Enter") {
       fetch(url, {
         method: "POST",
         headers: {
-          "Authorization": "Bearer fk-PXqbbSsLR_dnqyEEGz7bsVZjug1i3ctnG3_Xd4MGqiw",
+          "Authorization": "Bearer fk-LYBTWDHMH5_IwLNls_WJVTdkgOJCKG7G_fZs6YMpmHY",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -49,22 +49,22 @@ function App() {
           "max_tokens": 100,
           "messages": [
             {
-                "role": "system",
-                "content": "你是一个翻译助手，精通中英文翻译"
+              "role": "system",
+              "content": "你是一个翻译助手，精通中英文翻译"
             },
             {
-                "role": "user",
-                "content": `请将以下文本翻译成 ${isLanguage}：${text}`,
+              "role": "user",
+              "content": `请将以下文本翻译成 ${isLanguage}：${text}`,
             }
           ]
         }),
       })
-      .then((res) => res.json())
-      .then((res) => {
-        // console.log(res);
-        setShowText(res.choices[0].message.content);
-      })
-      .catch((err) => console.log(err))
+        .then((res) => res.json())
+        .then((res) => {
+          // console.log(res);
+          setShowText(res.choices[0].message.content);
+        })
+        .catch((err) => console.log(err))
     }
   }
 
