@@ -67,7 +67,6 @@ function App() {
       })
       .then((res) => res.json())
       .then((res) => {
-        // console.log(res);
         setShowText(res.choices[0].message.content);
       })
       .catch((err) => setShowText(err.Error()))

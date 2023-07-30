@@ -8,7 +8,7 @@ function ShowText({title, content}) {
 
   return (
     <div className="bg-white p-1">
-      <div className="p-2 flex">
+      <div className="p-1 flex">
         <div className="w-5 h-5 overflow-hidden">
           <img className="w-full h-full object-cover" src="icon.jpg" alt=""/>
         </div>
