@@ -5,9 +5,15 @@ import ShowText from "./ShowText";
 function App() {
   const [text, setText] = useState("");
   const [showText, setShowText] = useState("");
+  const [chatGPTText, setChatGPTText] = useState("");
+  const [showChatGPTText, setShowChatGPTText] = useState("");
 
   const handleChange = (e) => {
     setText(e.target.value);
+  }
+
+  const handleChatGPTChange = (e) => {
+    setChatGPTText(e.target.value);
   }
 
   const getLengths = (str) => {
@@ -59,24 +65,68 @@ function App() {
           ]
         }),
       })
-        .then((res) => res.json())
-        .then((res) => {
-          // console.log(res);
-          setShowText(res.choices[0].message.content);
-        })
-        .catch((err) => console.log(err))
+      .then((res) => res.json())
+      .then((res) => {
+        // console.log(res);
+        setShowText(res.choices[0].message.content);
+      })
+      .catch((err) => setShowText(err.Error()))
+    }
+  }
+
+  const handleChatGPT = (e) => {
+    const url = "https://ai.fakeopen.com/v1/chat/completions";
+
+    if (e.key === "Enter") {
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "Authorization": "Bearer fk-LYBTWDHMH5_IwLNls_WJVTdkgOJCKG7G_fZs6YMpmHY",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          "model": "gpt-3.5-turbo",
+          "max_tokens": 100,
+          "messages": [
+            {
+              "role": "system",
+              "content": "你是一个帮助助手"
+            },
+            {
+              "role": "user",
+              "content": chatGPTText,
+            }
+          ]
+        }),
+      })
+      .then((res) => res.json())
+      .then((res) => {
+        // console.log(res);
+        setShowChatGPTText(res.choices[0].message.content);
+      })
+      .catch((err) => setShowChatGPTText(err.Error()))
     }
   }
 
   return (
-    <div className="w-[300px] m-0 p-0 bg-red-100">
-      <div className="flex justify-center pt-3">
+    <div className="w-[400px] p-2 bg-gray-200">
+      <div className="flex justify-center pt-3 pb-1 bg-white">
         <h4>划词翻译</h4>
       </div>
-      <div className="w-full flex items-center justify-center">
-        <textarea value={text} onChange={handleChange} onKeyDown={handleEnter} className="resize max-w-full w-[95%] h-14 mt-2" placeholder="按下Enter键，也可以翻译文本框的文本"></textarea>
+      <div className="w-full flex items-center justify-center mb-2">
+        <textarea value={text} onChange={handleChange} onKeyDown={handleEnter} 
+        className="resize max-w-full w-full h-14 mt-2" placeholder="按下Enter键，也可以翻译文本框的文本"></textarea>
       </div>
-      <ShowText title={"ChatGPT"} content={showText} />
+      <div>
+        <ShowText title={"ChatGPT"} content={showText} />
+      </div>
+      <div>
+        <textarea value={chatGPTText} onChange={handleChatGPTChange} onKeyDown={handleChatGPT}
+        className="resize max-w-full w-full h-14 mt-2" placeholder="按下Enter键，输入ChatGPT"></textarea>
+      </div>
+      <div>
+        <ShowText title="ChatGPT" content={showChatGPTText} />
+      </div>
     </div>
   );
 }
